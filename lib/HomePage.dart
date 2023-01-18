@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ummie/CONSTANT.dart';
 import 'package:ummie/Ummicons_icons.dart';
 import 'package:avatar_stack/avatar_stack.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,14 +48,36 @@ class _HomePageState extends State<HomePage> {
                   color: BACKGROUNDCOLOR,
                   borderRadius: const BorderRadius.all(Radius.circular((16))),
                 ),
-                child: Row(
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Icon(Ummicons.search),
-                    ),
-                    Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18),),
-                  ],
+                child: InkWell(
+                  onTap: () {
+                    print("search");
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Icon(Ummicons.search),
+                            ),
+                            Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18),),
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          HapticFeedback.mediumImpact();
+                          print("filter");
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 16.0),
+                          child: Icon(Ummicons.filter),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
             ),
 
@@ -90,13 +113,14 @@ class _HomePageState extends State<HomePage> {
                             Stack(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(left: 21, right: 21, top: 14),
+                                  margin: const EdgeInsets.only(left: 18, right: 18, top: 14),
+                                  height: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(12)),
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(12.0),
-                                    child: Image.asset('assets/images/yourname.jpg', fit: BoxFit.cover,),
+                                    child: Image.asset('assets/images/yourname.gif', fit: BoxFit.cover, width: double.infinity,),
                                   ),// Image.asset(rooms[position),
                                 ),
                                 Positioned(
@@ -149,6 +173,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       onTap: (){
+                        HapticFeedback.mediumImpact();
                         print(position);
                       },
                     );
