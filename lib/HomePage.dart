@@ -4,6 +4,7 @@ import 'package:ummie/CONSTANT.dart';
 import 'package:ummie/Ummicons_icons.dart';
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,13 +25,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         centerTitle: false,
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 21),
-          child: Text("友间", style: TextStyle(color: Colors.black, fontSize: 28, fontFamily: 'ZCOOL'),),
+        title: Padding(
+          padding: EdgeInsets.only(left: 21.w),
+          child: Text("友间", style: TextStyle(color: Colors.black, fontSize: 28.sp, fontFamily: 'ZCOOL'),),
         ),
-        actions: const <Widget>[
+        actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 21.0),
+            padding: EdgeInsets.only(right: 21.w),
             child: Icon(Icons.add_circle_outline, color: Colors.black, size: 28,),
           )
         ],
@@ -41,8 +42,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-                margin: const EdgeInsets.symmetric(horizontal: 21),
-                height: 44,
+                margin: EdgeInsets.symmetric(horizontal: 21.w),
+                height: 44.h,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: BACKGROUNDCOLOR,
@@ -58,11 +59,11 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: Row(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
                               child: Icon(Ummicons.search),
                             ),
-                            Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18),),
+                            Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18.sp),),
                           ],
                         ),
                       ),
@@ -71,8 +72,8 @@ class _HomePageState extends State<HomePage> {
                           HapticFeedback.mediumImpact();
                           print("filter");
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 25.0, right: 16.0),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 25.w, right: 16.w),
                           child: Icon(Ummicons.filter),
                         ),
                       ),
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             Container(
-              margin: const EdgeInsets.only(left: 21, right: 21, top: 25, bottom: 20),
+              margin: EdgeInsets.only(left: 21.w, right: 21.w, top: 25.h, bottom: 20.h),
               child: Row(
                   children: <Widget>[
                     RandomCard(backgroundColor: BACKGROUNDCOLOR, type: "一起聊", typeImage: "assets/images/talking.png"),
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
 
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 12,
+              height: 12.h,
               color: BACKGROUNDCOLOR,
             ),
 
@@ -113,8 +114,8 @@ class _HomePageState extends State<HomePage> {
                             Stack(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(left: 18, right: 18, top: 14),
-                                  height: 200,
+                                  margin: EdgeInsets.only(left: 18.w, right: 18.w, top: 14.h),
+                                  height: 200.h,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(12)),
                                   ),
@@ -124,11 +125,11 @@ class _HomePageState extends State<HomePage> {
                                   ),// Image.asset(rooms[position),
                                 ),
                                 Positioned(
-                                  right: 28,
-                                  top: 22,
+                                  right: 28.w,
+                                  top: 22.h,
                                   child: Container(
-                                      width: 58,
-                                      height: 24,
+                                      width: 58.w,
+                                      height: 24.h,
                                       decoration: BoxDecoration(
                                         color: THEMECOLOR,
                                         borderRadius: BorderRadius.circular(8),
@@ -136,8 +137,8 @@ class _HomePageState extends State<HomePage> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Image.asset('assets/images/tv.png', width: 16, height: 16,),
-                                          const Text("看剧", style: TextStyle(color: Colors.white, fontSize: 12,),),
+                                          Image.asset('assets/images/tv.png', width: 16.w, height: 16.h,),
+                                          Text("看剧", style: TextStyle(color: Colors.white, fontSize: 12.sp,),),
                                         ],
                                       )
                                   ),
@@ -148,12 +149,12 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(left: 21, top: 14, bottom: 14),
-                                  child: const Text("你的名字.2016.BD1080p", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                                  margin: EdgeInsets.only(left: 21.w, top: 14.h, bottom: 14.h),
+                                  child: Text("你的名字.2016.BD1080p", style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),),
                                 ),
                                 Expanded(
                                   child: Container(
-                                    margin: EdgeInsets.only(right: 21),
+                                    margin: EdgeInsets.only(right: 21.w),
                                     child: AvatarStack(
                                       settings: RestrictedAmountPositions(
                                         maxAmountItems: 6,
@@ -161,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                         minCoverage: 0.5,
                                         align: StackAlign.right,
                                       ),
-                                      height: 40,
+                                      height: 40.h,
                                       textColor: Colors.white,
                                       avatars: [for (var n = 0; n < 18; n++) NetworkImage('https://i.pravatar.cc/150?img=$n')],
                                     ),
@@ -203,8 +204,8 @@ class RandomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        height: 108,
-        width: (MediaQuery.of(context).size.width - 16 - 42) / 2,
+        height: 108.h,
+        width: 186.w,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: const BorderRadius.all(Radius.circular((12))),
@@ -212,18 +213,22 @@ class RandomCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60, left: 12, right: 30),
-              child: Text(type, style: const TextStyle(fontSize: 22),),
+              padding: EdgeInsets.only(top: 60.h, left: 12.w, right: 30.w),
+              child: Text(type, style: TextStyle(fontSize: 22.sp),),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Image.asset(typeImage, height: 60, width: 60, alignment: Alignment.topRight,),
+              padding: EdgeInsets.only(bottom: 24.h),
+              child: Image.asset(typeImage, height: 60.h, width: 60.w, alignment: Alignment.topRight,),
             ),
           ],
         ),
       ),
       onTap: () {
-        print("Tapped Random Card");
+        if (type == "一起聊") {
+          print("picked chatting");
+        } else {
+          print("picked watching");
+        }
       },
     );
   }

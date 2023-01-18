@@ -5,6 +5,7 @@ import 'package:ummie/MessagePage.dart';
 import 'package:ummie/ProfilePage.dart';
 import 'package:ummie/Ummicons_icons.dart';
 import 'package:ummie/HomePage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const Ummie());
@@ -15,12 +16,20 @@ class Ummie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ummie',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: UmmieNavigationBar(),
+    return ScreenUtilInit(
+      designSize: const Size(428, 926),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Ummie',
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+          ),
+          home: child,
+        );
+      },
+      child: const UmmieNavigationBar(),
     );
   }
 }
