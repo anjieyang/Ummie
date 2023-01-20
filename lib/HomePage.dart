@@ -1,15 +1,17 @@
 import 'package:avatar_stack/positions.dart';
 import 'package:flutter/material.dart';
 import 'package:ummie/CONSTANT.dart';
+import 'package:ummie/modules/Room.dart';
 import 'package:ummie/SearchPage.dart';
 import 'package:ummie/Ummicons_icons.dart';
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ummie/Card.dart';
+import 'package:ummie/CommonWidgets.dart';
+import 'fake_data.dart';
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,25 +23,8 @@ class _HomePageState extends State<HomePage> {
   List<String> sortRules = <String>['推荐', '最热', '最新'];
   int selectedSortRule = 0;
 
-  // Route _createRoute() {
-  //   return PageRouteBuilder(
-  //     pageBuilder: (context, animation, secondaryAnimation) => const SearchPage(),
-  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //       const begin = Offset(0, 0.5);
-  //       const end = Offset.zero;
-  //       const curve = Curves.ease;
-  //
-  //       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-  //       return SlideTransition(
-  //         position: animation.drive(tween),
-  //         child: child,
-  //       );
-  //     }
-  //   );
-  // }
-
   void _navigateToSearchPage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchPage()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchPage()));
   }
 
   @override
@@ -69,11 +54,8 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(left: 21.w),
                     child: Text("友间", style: TextStyle(color: Colors.black, fontSize: 28.sp, fontFamily: 'ZCOOL'),),
                   ),
-                  actions: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 21.w),
-                      child: Icon(Icons.add_circle_outline, color: Colors.black, size: 28,),
-                    )
+                  actions: const <Widget>[
+                    HomePagePopMenu(),
                   ],
                 ),
               )
@@ -104,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                    child: Icon(Ummicons.search),
+                                    child: const Icon(Ummicons.search),
                                   ),
                                   Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18.sp),),
                                 ],
@@ -136,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                                                       onTap: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Icon(Icons.close, size: 32,),
+                                                      child: const Icon(Icons.close, size: 32,),
                                                     ),
                                                     Text("筛选和排序", style: TextStyle(fontSize: 20.sp),),
                                                     Opacity(
@@ -217,6 +199,9 @@ class _HomePageState extends State<HomePage> {
                                                     HapticFeedback.mediumImpact();
                                                     Navigator.pop(context);
                                                     print("Filter: 一起聊: ${isFilterChat}, 一起看: ${isFilterWatch}, Sort: ${sortRules[selectedSortRule]}");
+                                                    setState(() {
+                                                      RoomsList.updateRoomsList(isFilterChat, isFilterWatch);
+                                                    });
                                                   },
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -233,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Container(
                                 padding: EdgeInsets.only(left: 25.w, right: 16.w),
-                                child: Icon(Ummicons.filter),
+                                child: const Icon(Ummicons.filter),
                               ),
                             ),
                           ],
@@ -263,86 +248,89 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           Flexible(
-                            child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: 6,
-                                itemBuilder: (context, position) {
-                                  return InkWell(
-                                    child: Container(
-                                      margin: EdgeInsets.only(bottom: 6),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(left: 18.w, right: 18.w, top: 14.h),
-                                                height: 200.h,
-                                                decoration: const BoxDecoration(
-                                                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(12.0),
-                                                  child: Image.asset('assets/images/yourname.gif', fit: BoxFit.cover, width: double.infinity,),
-                                                ),// Image.asset(rooms[position),
-                                              ),
-                                              Positioned(
-                                                right: 28.w,
-                                                top: 22.h,
-                                                child: Container(
-                                                    width: 58.w,
-                                                    height: 24.h,
-                                                    decoration: BoxDecoration(
-                                                      color: THEMECOLOR,
-                                                      borderRadius: BorderRadius.circular(8),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      children: <Widget>[
-                                                        Image.asset('assets/images/type_watching.png', width: 16.w, height: 16.h,),
-                                                        Text("看剧", style: TextStyle(color: Colors.white, fontSize: 12.sp,),),
-                                                      ],
-                                                    )
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(left: 21.w, top: 14.h, bottom: 14.h),
-                                                child: Text("你的名字.2016.BD1080p", style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  margin: EdgeInsets.only(right: 21.w),
-                                                  child: AvatarStack(
-                                                    settings: RestrictedAmountPositions(
-                                                      maxAmountItems: 6,
-                                                      maxCoverage: 0.5,
-                                                      minCoverage: 0.5,
-                                                      align: StackAlign.right,
-                                                    ),
-                                                    height: 40.h,
-                                                    textColor: Colors.white,
-                                                    avatars: [for (var n = 0; n < 18; n++) NetworkImage('https://i.pravatar.cc/150?img=$n')],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    onTap: (){
-                                      HapticFeedback.mediumImpact();
-                                      print(position);
-                                    },
-                                  );
-                                }
-                            ),
+                            // child: ListView.builder(
+                            //     scrollDirection: Axis.vertical,
+                            //     physics: const NeverScrollableScrollPhysics(),
+                            //     shrinkWrap: true,
+                            //     itemCount: _rooms.length,
+                            //     itemBuilder: (context, index) {
+                            //       return InkWell(
+                            //         child: Container(
+                            //           margin: const EdgeInsets.only(bottom: 6),
+                            //           child: Column(
+                            //             children: <Widget>[
+                            //               Stack(
+                            //                 children: [
+                            //                   Container(
+                            //                     margin: EdgeInsets.only(left: 18.w, right: 18.w, top: 14.h),
+                            //                     height: 200.h,
+                            //                     decoration: const BoxDecoration(
+                            //                       borderRadius: BorderRadius.all(Radius.circular(12)),
+                            //                     ),
+                            //                     child: ClipRRect(
+                            //                       borderRadius: BorderRadius.circular(12.0),
+                            //                       // child: Image.asset(rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
+                            //                       child: Image.asset(_rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
+                            //                     ),// Image.asset(rooms[position),
+                            //                   ),
+                            //                   Positioned(
+                            //                     right: 28.w,
+                            //                     top: 22.h,
+                            //                     child: Container(
+                            //                         width: 58.w,
+                            //                         height: 24.h,
+                            //                         decoration: BoxDecoration(
+                            //                           color: THEMECOLOR,
+                            //                           borderRadius: BorderRadius.circular(8),
+                            //                         ),
+                            //                         child: Row(
+                            //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //                           children: <Widget>[
+                            //                             Image.asset(_rooms[index].roomType == '聊天' ? 'assets/images/type_talking.png' : 'assets/images/type_watching.png', width: 16.w, height: 16.h,),
+                            //                             Text(_rooms[index].roomType, style: TextStyle(color: Colors.white, fontSize: 12.sp,),),
+                            //                           ],
+                            //                         )
+                            //                     ),
+                            //                   )
+                            //                 ],
+                            //               ),
+                            //               Row(
+                            //                 mainAxisAlignment: MainAxisAlignment.center,
+                            //                 children: [
+                            //                   Container(
+                            //                     margin: EdgeInsets.only(left: 21.w, top: 14.h, bottom: 14.h),
+                            //                     child: Text(_rooms[index].roomName, style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),),
+                            //                   ),
+                            //                   Expanded(
+                            //                     child: Container(
+                            //                       margin: EdgeInsets.only(right: 21.w),
+                            //                       child: AvatarStack(
+                            //                         settings: RestrictedAmountPositions(
+                            //                           maxAmountItems: 6,
+                            //                           maxCoverage: 0.5,
+                            //                           minCoverage: 0.5,
+                            //                           align: StackAlign.right,
+                            //                         ),
+                            //                         height: 40.h,
+                            //                         textColor: Colors.white,
+                            //                         // avatars: [for (var n = 0; n < 18; n++) NetworkImage('https://i.pravatar.cc/150?img=$n')],
+                            //                         avatars: [for (int i = 0; i < _rooms[index].roomMembers.length; ++i) AssetImage(_filteredRooms(isFilterChat, isFilterWatch, _rooms)[index].roomMembers[i].avatarURL)],
+                            //                       ),
+                            //                     ),
+                            //                   )
+                            //                 ],
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         onTap: (){
+                            //           HapticFeedback.mediumImpact();
+                            //           print(index);
+                            //         },
+                            //       );
+                            //     }
+                            // ),
+                            child: RoomsList(),
                           )
                         ],
                       ),
@@ -358,50 +346,122 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// class TypeCard extends StatelessWidget {
-//   const TypeCard({
-//     Key? key,
-//     required this.backgroundColor,
-//     required this.typeImage,
-//     required this.type,
-//   }) : super(key: key);
-//
-//   final Color backgroundColor;
-//   final String type;
-//   final String typeImage;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       child: Container(
-//         height: 108.h,
-//         width: 186.w,
-//         decoration: BoxDecoration(
-//           color: backgroundColor,
-//           borderRadius: const BorderRadius.all(Radius.circular((12))),
-//         ),
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: <Widget>[
-//             Container(
-//               margin: EdgeInsets.only(top: 60.h, left: 14.w),
-//               child: Text(type, style: TextStyle(fontSize: 22.sp),),
-//             ),
-//             Container(
-//               margin: EdgeInsets.only(bottom: 26.h, right: 18.w),
-//               child: Image.asset(typeImage, height: 60.h, width: 60.w, alignment: Alignment.topRight,),
-//             ),
-//           ],
-//         ),
-//       ),
-//       onTap: () {
-//         if (type == "一起聊") {
-//           print("picked chatting");
-//         } else {
-//           print("picked watching");
-//         }
-//       },
-//     );
-//   }
-// }
+class RoomsList extends StatefulWidget {
+  static final _RoomsListState _roomsListState = _RoomsListState();
 
+  @override
+  _RoomsListState createState() => _roomsListState;
+
+  static void updateRoomsList(bool isFilterChat, bool isFilterWatch) {
+    _roomsListState.updateRoomsList(isFilterChat, isFilterWatch);
+  }
+}
+
+class _RoomsListState extends State<RoomsList> {
+  List<Room> _rooms = fake_rooms;
+  bool filterChat = false;
+  bool filterWatch = false;
+
+  List<Room> _filteredRooms(bool isFilterChat, bool isFilterWatch, List<Room> roomList) {
+    if ((isFilterChat && isFilterWatch) || (!isFilterChat && !isFilterWatch)) {
+      return roomList;
+    }
+    return isFilterChat ?
+    roomList.where((element) => element.roomType == '聊天').toList() : roomList.where((element) => element.roomType == '看剧').toList();
+  }
+
+  updateRoomsList(bool isFilterChat, bool isFilterWatch) {
+    setState(() {
+      _rooms = _filteredRooms(isFilterChat, isFilterWatch, fake_rooms);
+      filterChat = isFilterChat;
+      filterWatch = isFilterWatch;
+      print(_rooms.length);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _rooms.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 6),
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 18.w, right: 18.w, top: 14.h),
+                        height: 200.h,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          // child: Image.asset(rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
+                          child: Image.asset(_rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
+                        ),// Image.asset(rooms[position),
+                      ),
+                      Positioned(
+                        right: 28.w,
+                        top: 22.h,
+                        child: Container(
+                            width: 58.w,
+                            height: 24.h,
+                            decoration: BoxDecoration(
+                              color: THEMECOLOR,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Image.asset(_rooms[index].roomType == '聊天' ? 'assets/images/type_talking.png' : 'assets/images/type_watching.png', width: 16.w, height: 16.h,),
+                                Text(_rooms[index].roomType, style: TextStyle(color: Colors.white, fontSize: 12.sp,),),
+                              ],
+                            )
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 21.w, top: 14.h, bottom: 14.h),
+                        child: Text(_rooms[index].roomName, style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 21.w),
+                          child: AvatarStack(
+                            settings: RestrictedAmountPositions(
+                              maxAmountItems: 6,
+                              maxCoverage: 0.5,
+                              minCoverage: 0.5,
+                              align: StackAlign.right,
+                            ),
+                            height: 40.h,
+                            textColor: Colors.white,
+                            // avatars: [for (var n = 0; n < 18; n++) NetworkImage('https://i.pravatar.cc/150?img=$n')],
+                            avatars: [for (int i = 0; i < _rooms[index].roomMembers.length; ++i) AssetImage(_rooms[index].roomMembers[i].avatarURL)],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            onTap: (){
+              HapticFeedback.mediumImpact();
+              print(index);
+            },
+          );
+        }
+    );
+  }
+}

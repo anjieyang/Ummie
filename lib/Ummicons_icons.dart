@@ -12,6 +12,8 @@ class Ummicons {
 
   static const String _fontFamily = 'Ummicons';
 
+  static const IconData create_room = IconData(0xe957, fontFamily: _fontFamily);
+  static const IconData add_friend = IconData(0xe958, fontFamily: _fontFamily);
   static const IconData cinema = IconData(0xe900, fontFamily: _fontFamily);
   static const IconData comment = IconData(0xe90f, fontFamily: _fontFamily);
   static const IconData filter = IconData(0xe910, fontFamily: _fontFamily);
