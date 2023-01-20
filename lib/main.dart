@@ -24,7 +24,9 @@ class Ummie extends StatelessWidget {
         return MaterialApp(
           title: 'Ummie',
           theme: ThemeData(
+            splashFactory: NoSplash.splashFactory,
             primarySwatch: Colors.green,
+            highlightColor: Colors.transparent
           ),
           home: child,
         );
@@ -45,7 +47,7 @@ class _UmmieNavigationBarState extends State<UmmieNavigationBar> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(),
+    HomePage(),
     const IdeasPage(),
     const MessagePage(),
     const ProfilePage(),
