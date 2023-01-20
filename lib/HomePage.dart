@@ -18,8 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isFilterChat = false;
   bool isFilterWatch = false;
-  List<String> filterRules = <String>['推荐', '最热', '最新'];
-  int selectedRule = 0;
+  List<String> sortRules = <String>['推荐', '最热', '最新'];
+  int selectedSortRule = 0;
 
   // Route _createRoute() {
   //   return PageRouteBuilder(
@@ -183,38 +183,40 @@ class _HomePageState extends State<HomePage> {
                                                 child: Text("排序规则", style: TextStyle(fontSize: 22.sp),),
                                               ),
                                               ListView.builder(
-                                                itemCount: filterRules.length,
+                                                itemCount: sortRules.length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return InkWell(
                                                     onTap: () {
                                                       setState(() {
-                                                        selectedRule = index;
-                                                        print(filterRules[index]);
+                                                        selectedSortRule = index;
+                                                        print(sortRules[index]);
                                                       });
                                                     },
                                                     child: Container(
-                                                      margin: EdgeInsets.only(left: 21.w, right: 21.w, bottom: 14.h),
+                                                      margin: EdgeInsets.only(left: 21.w, right: 21.w, bottom: 10.h),
                                                       height: 52.h,
                                                       width: double.infinity,
-                                                      decoration: index == selectedRule? SELECTEDDECORATION : DEFAULTDECORATION,
+                                                      decoration: index == selectedSortRule? SELECTEDDECORATION : DEFAULTDECORATION,
                                                       child: Container(
                                                         margin: EdgeInsets.only(left: 22.w),
                                                         alignment: Alignment.centerLeft,
-                                                        child: Text('${filterRules[index]}', style: TextStyle(fontSize: 20.sp),),
+                                                        child: Text('${sortRules[index]}', style: TextStyle(fontSize: 20.sp),),
                                                       ),
                                                     ),
                                                   );
                                                 },
                                               ),
                                               Container(
-                                                margin: EdgeInsets.only(left: 21.w, top: 20.h, right: 21.w, bottom: 14.h),
+                                                margin: EdgeInsets.only(left: 21.w, right: 21.w, bottom: 36.h),
                                                 height: 52.h,
                                                 width: double.infinity,
                                                 color: THEMECOLOR,
                                                 child: InkWell(
                                                   onTap: () {
+                                                    HapticFeedback.mediumImpact();
                                                     Navigator.pop(context);
+                                                    print("Filter: 一起聊: ${isFilterChat}, 一起看: ${isFilterWatch}, Sort: ${sortRules[selectedSortRule]}");
                                                   },
                                                   child: Container(
                                                     alignment: Alignment.center,
