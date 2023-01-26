@@ -1,6 +1,8 @@
 import 'package:avatar_stack/positions.dart';
 import 'package:flutter/material.dart';
 import 'package:ummie/CONSTANT.dart';
+import 'package:ummie/ChatRoomPage.dart';
+import 'package:ummie/VideoRoomPage.dart';
 import 'package:ummie/modules/Room.dart';
 import 'package:ummie/SearchPage.dart';
 import 'package:ummie/Ummicons_icons.dart';
@@ -17,7 +19,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>{
   bool isFilterChat = false;
   bool isFilterWatch = false;
   List<String> sortRules = <String>['推荐', '最热', '最新'];
@@ -347,10 +349,12 @@ class _HomePageState extends State<HomePage> {
 }
 
 class RoomsList extends StatefulWidget {
-  static final _RoomsListState _roomsListState = _RoomsListState();
+  static _RoomsListState _roomsListState = _RoomsListState();
 
   @override
-  _RoomsListState createState() => _roomsListState;
+  _RoomsListState createState() {
+    return _roomsListState = _RoomsListState();
+  }
 
   static void updateRoomsList(bool isFilterChat, bool isFilterWatch) {
     _roomsListState.updateRoomsList(isFilterChat, isFilterWatch);
@@ -459,6 +463,14 @@ class _RoomsListState extends State<RoomsList> {
             onTap: (){
               HapticFeedback.mediumImpact();
               print(index);
+              print(_rooms[index].roomType);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return _rooms[index].roomType == "聊天" ? ChatRoomPage(roomId: index.toString()) : VideoRoomPage(roomId: index.toString());
+                  }
+                )
+              );
             },
           );
         }

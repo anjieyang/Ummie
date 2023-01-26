@@ -7,7 +7,7 @@ class IdeasPage extends StatefulWidget {
   State<IdeasPage> createState() => _IdeasPageState();
 }
 
-class _IdeasPageState extends State<IdeasPage> {
+class _IdeasPageState extends State<IdeasPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(

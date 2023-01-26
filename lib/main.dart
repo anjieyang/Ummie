@@ -44,16 +44,18 @@ class UmmieNavigationBar extends StatefulWidget {
 }
 
 class _UmmieNavigationBarState extends State<UmmieNavigationBar> {
+  final PageController pageController = PageController();
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    HomePage(),
+    const HomePage(),
     const IdeasPage(),
     const MessagePage(),
     const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
+    pageController.jumpToPage(index);
     setState(() {
       _selectedIndex = index;
     });
@@ -63,7 +65,17 @@ class _UmmieNavigationBarState extends State<UmmieNavigationBar> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: _pages[_selectedIndex],
+      // body: _pages[_selectedIndex],
+      body: PageView(
+        controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: _pages,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
         items: [
