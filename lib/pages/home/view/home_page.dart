@@ -1,16 +1,15 @@
 import 'package:avatar_stack/positions.dart';
 import 'package:flutter/material.dart';
-import 'package:ummie/CONSTANT.dart';
-import 'package:ummie/ChatRoomPage.dart';
-import 'package:ummie/VideoRoomPage.dart';
-import 'package:ummie/modules/Room.dart';
-import 'package:ummie/SearchPage.dart';
-import 'package:ummie/Ummicons_icons.dart';
+import 'package:ummie/config/config.dart';
+import 'package:ummie/data/fake_data/fake_data.dart';
+import 'package:ummie/pages/room/room.dart';
+import 'package:ummie/domain/room_repository/room_repository.dart';
+import 'package:ummie/pages/search/search.dart';
+import 'package:ummie/config/ummicons.dart';
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ummie/CommonWidgets.dart';
-import 'fake_data.dart';
+import 'package:ummie/pages/home/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -71,7 +70,7 @@ class _HomePageState extends State<HomePage>{
                       height: 44.h,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: BACKGROUNDCOLOR,
+                        color: backgroundColor,
                         borderRadius: const BorderRadius.all(Radius.circular((16))),
                       ),
                       child: InkWell(
@@ -90,7 +89,7 @@ class _HomePageState extends State<HomePage>{
                                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                                     child: const Icon(Ummicons.search),
                                   ),
-                                  Text("搜索房间名，联系人", style: TextStyle(color: SEARCHBARCOLOR, fontSize: 18.sp),),
+                                  Text("搜索房间名，联系人", style: TextStyle(color: searchBarColor, fontSize: 18.sp),),
                                 ],
                               ),
                             ),
@@ -106,7 +105,7 @@ class _HomePageState extends State<HomePage>{
                                     context: context,
                                     builder: (BuildContext context) {
                                       return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                                        return Container(
+                                        return SizedBox(
                                           height: 620.h,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,11 +180,11 @@ class _HomePageState extends State<HomePage>{
                                                       margin: EdgeInsets.only(left: 21.w, right: 21.w, bottom: 10.h),
                                                       height: 52.h,
                                                       width: double.infinity,
-                                                      decoration: index == selectedSortRule? SELECTEDDECORATION : DEFAULTDECORATION,
+                                                      decoration: index == selectedSortRule? selectedDecoration : defaultDecoration,
                                                       child: Container(
                                                         margin: EdgeInsets.only(left: 22.w),
                                                         alignment: Alignment.centerLeft,
-                                                        child: Text('${sortRules[index]}', style: TextStyle(fontSize: 20.sp),),
+                                                        child: Text(sortRules[index], style: TextStyle(fontSize: 20.sp),),
                                                       ),
                                                     ),
                                                   );
@@ -195,12 +194,12 @@ class _HomePageState extends State<HomePage>{
                                                 margin: EdgeInsets.only(left: 21.w, right: 21.w, bottom: 36.h),
                                                 height: 52.h,
                                                 width: double.infinity,
-                                                color: THEMECOLOR,
+                                                color: themeColor,
                                                 child: InkWell(
                                                   onTap: () {
                                                     HapticFeedback.mediumImpact();
                                                     Navigator.pop(context);
-                                                    print("Filter: 一起聊: ${isFilterChat}, 一起看: ${isFilterWatch}, Sort: ${sortRules[selectedSortRule]}");
+                                                    print("Filter: 一起聊: $isFilterChat, 一起看: $isFilterWatch, Sort: ${sortRules[selectedSortRule]}");
                                                     setState(() {
                                                       RoomsList.updateRoomsList(isFilterChat, isFilterWatch);
                                                     });
@@ -246,92 +245,10 @@ class _HomePageState extends State<HomePage>{
                           Container(
                             width: MediaQuery.of(context).size.width,
                             height: 12.h,
-                            color: BACKGROUNDCOLOR,
+                            color: backgroundColor,
                           ),
 
                           Flexible(
-                            // child: ListView.builder(
-                            //     scrollDirection: Axis.vertical,
-                            //     physics: const NeverScrollableScrollPhysics(),
-                            //     shrinkWrap: true,
-                            //     itemCount: _rooms.length,
-                            //     itemBuilder: (context, index) {
-                            //       return InkWell(
-                            //         child: Container(
-                            //           margin: const EdgeInsets.only(bottom: 6),
-                            //           child: Column(
-                            //             children: <Widget>[
-                            //               Stack(
-                            //                 children: [
-                            //                   Container(
-                            //                     margin: EdgeInsets.only(left: 18.w, right: 18.w, top: 14.h),
-                            //                     height: 200.h,
-                            //                     decoration: const BoxDecoration(
-                            //                       borderRadius: BorderRadius.all(Radius.circular(12)),
-                            //                     ),
-                            //                     child: ClipRRect(
-                            //                       borderRadius: BorderRadius.circular(12.0),
-                            //                       // child: Image.asset(rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
-                            //                       child: Image.asset(_rooms[index].roomCover, fit: BoxFit.cover, width: double.infinity,),
-                            //                     ),// Image.asset(rooms[position),
-                            //                   ),
-                            //                   Positioned(
-                            //                     right: 28.w,
-                            //                     top: 22.h,
-                            //                     child: Container(
-                            //                         width: 58.w,
-                            //                         height: 24.h,
-                            //                         decoration: BoxDecoration(
-                            //                           color: THEMECOLOR,
-                            //                           borderRadius: BorderRadius.circular(8),
-                            //                         ),
-                            //                         child: Row(
-                            //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            //                           children: <Widget>[
-                            //                             Image.asset(_rooms[index].roomType == '聊天' ? 'assets/images/type_talking.png' : 'assets/images/type_watching.png', width: 16.w, height: 16.h,),
-                            //                             Text(_rooms[index].roomType, style: TextStyle(color: Colors.white, fontSize: 12.sp,),),
-                            //                           ],
-                            //                         )
-                            //                     ),
-                            //                   )
-                            //                 ],
-                            //               ),
-                            //               Row(
-                            //                 mainAxisAlignment: MainAxisAlignment.center,
-                            //                 children: [
-                            //                   Container(
-                            //                     margin: EdgeInsets.only(left: 21.w, top: 14.h, bottom: 14.h),
-                            //                     child: Text(_rooms[index].roomName, style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),),
-                            //                   ),
-                            //                   Expanded(
-                            //                     child: Container(
-                            //                       margin: EdgeInsets.only(right: 21.w),
-                            //                       child: AvatarStack(
-                            //                         settings: RestrictedAmountPositions(
-                            //                           maxAmountItems: 6,
-                            //                           maxCoverage: 0.5,
-                            //                           minCoverage: 0.5,
-                            //                           align: StackAlign.right,
-                            //                         ),
-                            //                         height: 40.h,
-                            //                         textColor: Colors.white,
-                            //                         // avatars: [for (var n = 0; n < 18; n++) NetworkImage('https://i.pravatar.cc/150?img=$n')],
-                            //                         avatars: [for (int i = 0; i < _rooms[index].roomMembers.length; ++i) AssetImage(_filteredRooms(isFilterChat, isFilterWatch, _rooms)[index].roomMembers[i].avatarURL)],
-                            //                       ),
-                            //                     ),
-                            //                   )
-                            //                 ],
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //         onTap: (){
-                            //           HapticFeedback.mediumImpact();
-                            //           print(index);
-                            //         },
-                            //       );
-                            //     }
-                            // ),
                             child: RoomsList(),
                           )
                         ],
@@ -417,7 +334,7 @@ class _RoomsListState extends State<RoomsList> {
                             width: 58.w,
                             height: 24.h,
                             decoration: BoxDecoration(
-                              color: THEMECOLOR,
+                              color: themeColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(

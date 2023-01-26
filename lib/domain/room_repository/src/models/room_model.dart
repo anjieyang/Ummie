@@ -1,4 +1,4 @@
-import 'package:ummie/modules/User.dart';
+import 'user_model.dart';
 
 class Room {
   String _roomName;

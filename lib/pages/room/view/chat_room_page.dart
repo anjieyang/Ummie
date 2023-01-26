@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'fake_data.dart';
+import 'package:ummie/data/fake_data/fake_data.dart';
 
 class ChatRoomPage extends StatelessWidget {
   final String roomId;
@@ -15,12 +15,12 @@ class ChatRoomPage extends StatelessWidget {
           child: Text("Chat Room: ${fake_rooms[int.parse(roomId)].roomName}"),
         ),
         backgroundColor: Colors.white,
-        titleTextStyle: TextStyle(color: Colors.black),
+        titleTextStyle: const TextStyle(color: Colors.black),
         automaticallyImplyLeading: false,
         elevation: 0,
       ),
       body: Center(
-        child: Text("${roomId}"),
+        child: Text(roomId),
       ),
     );
   }

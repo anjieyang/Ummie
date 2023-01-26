@@ -1,6 +1,4 @@
-
-import 'package:ummie/modules/User.dart';
-import 'package:ummie/modules/Room.dart';
+import 'package:ummie/domain/room_repository/room_repository.dart';
 
 var users = [
   User('userName', 'assets/avatars/0.JPG'),

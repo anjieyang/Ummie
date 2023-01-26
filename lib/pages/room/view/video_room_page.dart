@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'fake_data.dart';
+import 'package:ummie/data/fake_data/fake_data.dart';
 
 class VideoRoomPage extends StatelessWidget {
   final String roomId;
@@ -20,7 +20,7 @@ class VideoRoomPage extends StatelessWidget {
           elevation: 0,
         ),
         body: Center(
-          child: Text("${roomId}"),
+          child: Text(roomId),
         )
     );
   }

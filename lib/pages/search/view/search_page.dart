@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Ummicons_icons.dart';
-import 'CONSTANT.dart';
-import 'package:flutter/services.dart';
+import 'package:ummie/config/config.dart';
 
 
 class SearchPage extends StatefulWidget {
@@ -23,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
           height: 44.h,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: BACKGROUNDCOLOR,
+            color: backgroundColor,
             borderRadius: const BorderRadius.all(Radius.circular((16))),
           ),
           child: Row(
@@ -50,7 +48,7 @@ class _SearchPageState extends State<SearchPage> {
                           hintText: "搜索房间名，联系人",
                           border: InputBorder.none,
                           isCollapsed: true,
-                          hintStyle: TextStyle(color: SEARCHBARCOLOR, fontSize: 18.sp)
+                          hintStyle: TextStyle(color: searchBarColor, fontSize: 18.sp)
                         ),
                       ),
                     ),
