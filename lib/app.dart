@@ -6,6 +6,7 @@ import 'package:ummie/pages/home/home.dart';
 import 'package:ummie/pages/ideas/ideas.dart';
 import 'package:ummie/pages/message/message.dart';
 import 'package:ummie/pages/profile/profile.dart';
+import 'pages/authentication/view/view.dart';
 
 
 
@@ -24,9 +25,11 @@ class Ummie extends StatelessWidget {
           theme: ThemeData(
             splashFactory: NoSplash.splashFactory,
             primarySwatch: Colors.green,
-            highlightColor: Colors.transparent
+            highlightColor: Colors.transparent,
+            scaffoldBackgroundColor: Colors.white,
           ),
-          home: child,
+          // home: child,
+          home: LoginPage(),
         );
       },
       child: const UmmieNavigationBar(),
