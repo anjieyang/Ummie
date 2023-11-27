@@ -1,5 +1,5 @@
 # Ummie
-Welcome to Ummie, the cross-platform application that brings friends and family together for a shared movie and TV series watching experience, regardless of the distance. Developed using the Flutter, Ummie is designed to synchronize video playback across multiple devices, allowing you and your friends to enjoy your favorite films and series simultaneously.
+Welcome to Ummie, the cross-platform application developed by Flutter, that brings friends and family together for a shared movie and TV series watching experience, regardless of the distance. Ummie is designed to synchronize video playback across multiple devices, allowing you and your friends to enjoy your favorite films and series simultaneously.
 
 ## Features:
 - Cross-Platform Compatibility: Enjoy Ummie on various devices, ensuring a seamless experience whether you're using a smartphone, tablet, or computer.
